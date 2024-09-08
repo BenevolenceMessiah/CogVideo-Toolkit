@@ -47,7 +47,7 @@ timeout /t 3
 echo As-salamu alaykum!!
 echo detecting presence of repo, git cloning if not detected...
 echo ---------------------------------------------------------------
-if exist docs\ goto Menu1
+if exist tools\ goto Menu1
 git clone https://github.com/BenevolenceMessiah/CogVideo-Toolkit.git
 cd CogVideo-Toolkit
 git pull
