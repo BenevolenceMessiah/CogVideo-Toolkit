@@ -14,7 +14,7 @@
 📚 <a href="https://arxiv.org/abs/2408.06072" target="_blank">論文</a>と<a href="https://zhipu-ai.feishu.cn/wiki/DHCjw1TrJiTyeukfc9RceoSRnCh" target="_blank">使用ドキュメント</a>を表示します。
 </p>
 <p align="center">
-    👋 <a href="resources/WECHAT.md" target="_blank">WeChat</a> と <a href="https://discord.gg/B94UfuhN" target="_blank">Discord</a> に参加
+    👋 <a href="resources/WECHAT.md" target="_blank">WeChat</a> と <a href="https://discord.gg/Qqjtj69f" target="_blank">Discord</a> に参加
 </p>
 <p align="center">
 📍 <a href="https://chatglm.cn/video?lang=en?fr=osm_cogvideo">清影</a> と <a href="https://open.bigmodel.cn/?utm_campaign=open&_channel_track_key=OWTVNma9">APIプラットフォーム</a> を訪問して、より大規模な商用ビデオ生成モデルを体験
@@ -234,13 +234,12 @@ CogVideoXは[清影](https://chatglm.cn/video?lang=en?fr=osm_cogvideo) 同源の
   以上のすべてのデバイスに適応できます。最適化を無効にすると、VRAM使用量が大幅に増加し、表の約3倍のピークVRAMを使用しますが、速度は3-4倍向上します。以下の最適化の一部を選択的に無効にすることができます:
 
 ```
-pipe.enable_model_cpu_offload()
 pipe.enable_sequential_cpu_offload()
 pipe.vae.enable_slicing()
 pipe.vae.enable_tiling()
 ```
 
-+ マルチGPU推論を行う際には、`enable_model_cpu_offload()` の最適化を無効にする必要があります。
++ マルチGPU推論を行う際には、`enable_sequential_cpu_offload()` の最適化を無効にする必要があります。
 + INT8モデルを使用すると推論速度が低下します。これは、ビデオ品質の損失を最小限に抑えながら、VRAMが少ないGPUでも正常に推論できるようにするためですが、推論速度は大幅に低下します。
 + 2Bモデルは `FP16` 精度でトレーニングされ、5Bモデルは `BF16` 精度でトレーニングされています。推論には、モデルがトレーニングされた精度を使用することをお勧めします。
 + [PytorchAO](https://github.com/pytorch/ao) および [Optimum-quanto](https://github.com/huggingface/optimum-quanto/)
@@ -262,6 +261,7 @@ pipe.vae.enable_tiling()
 
 + [Xorbits Inference](https://github.com/xorbitsai/inference):
   強力で包括的な分散推論フレームワークであり、ワンクリックで独自のモデルや最新のオープンソースモデルを簡単にデプロイできます。
++ + [ComfyUI-CogVideoXWrapper](https://github.com/kijai/ComfyUI-CogVideoXWrapper) ComfyUIフレームワークを使用して、CogVideoXをワークフローに統合します。
 + [VideoSys](https://github.com/NUS-HPC-AI-Lab/VideoSys): VideoSysは、使いやすく高性能なビデオ生成インフラを提供し、最新のモデルや技術を継続的に統合しています。
 + [AutoDLイメージ](https://www.codewithgpu.com/i/THUDM/CogVideo/CogVideoX-5b-demo): コミュニティメンバーが提供するHuggingface
   Spaceイメージのワンクリックデプロイメント。
