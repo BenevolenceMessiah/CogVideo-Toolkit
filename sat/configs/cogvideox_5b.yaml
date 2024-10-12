@@ -1,5 +1,5 @@
 model:
-  scale_factor: 0.7 # different from cogvideox_2b_infer.yaml
+  scale_factor: 0.7
   disable_first_stage_autocast: true
   log_keys:
     - txt

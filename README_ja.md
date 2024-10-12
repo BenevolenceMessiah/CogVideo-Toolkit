@@ -14,38 +14,42 @@
 📚 <a href="https://arxiv.org/abs/2408.06072" target="_blank">論文</a>と<a href="https://zhipu-ai.feishu.cn/wiki/DHCjw1TrJiTyeukfc9RceoSRnCh" target="_blank">使用ドキュメント</a>を表示します。
 </p>
 <p align="center">
-    👋 <a href="resources/WECHAT.md" target="_blank">WeChat</a> と <a href="https://discord.gg/Qqjtj69f" target="_blank">Discord</a> に参加
+    👋 <a href="resources/WECHAT.md" target="_blank">WeChat</a> と <a href="https://discord.gg/dCGfUsagrD" target="_blank">Discord</a> に参加
 </p>
 <p align="center">
-📍 <a href="https://chatglm.cn/video?lang=en?fr=osm_cogvideo">清影</a> と <a href="https://open.bigmodel.cn/?utm_campaign=open&_channel_track_key=OWTVNma9">APIプラットフォーム</a> を訪問して、より大規模な商用ビデオ生成モデルを体験
+📍 <a href="https://chatglm.cn/video?lang=en?fr=osm_cogvideo">清影</a> と <a href="https://open.bigmodel.cn/?utm_campaign=open&_channel_track_key=OWTVNma9">APIプラットフォーム</a> を訪問して、より大規模な商用ビデオ生成モデルを体験.
+CogVideoXの動画生成に関連するエコシステムコミュニティをさらに活性化させるためには、生成モデルの最適化が非常に重要な方向性です。私たちは、CogVideoXの微調整シナリ飛書オを<a href="https://zhipu-ai.feishu.cn/wiki/DHCjw1TrJiTyeukfc9RceoSRnCh">技術文書</a>で公開し、分配の自由度をさらに高めるために、公開されている全てのサンプルを完全に再現可能にしています。
+
+CogVideoXの微調整方法は、SFTとLoRA微調整に分かれており、公開されているデータ処理スクリプトを使用することで、特定の分野においてスタイルの一致をより手軽に達成できます。また、キャラクターイメージ（IP）やシーンスタイルのアブレーション実験のガイドも提供しており、微調整タスクの再現の難易度をさらに低減します。 私たちは、さらに創造的な探索が加わることを期待しています。
 </p>
 
 ## 更新とニュース
 
-- 🔥🔥 **ニュース**: ```2024/8/29```: `pipe.enable_sequential_cpu_offload()` と `pipe.vae.enable_slicing()`
-  をCogVideoX-5Bの推論コードに追加することで、VRAM使用量を`5GB`
-  まで削減できます。更新された[cli_demo](inference/cli_demo.py)をご覧ください。
-- 🔥**ニュース**: ```2024/8/27```: **CogVideoX-2B** モデルのオープンソースライセンスが **Apache 2.0 ライセンス**
-  に変更されました。
-- 🔥**ニュース**: ```2024/8/27```: CogVideoX シリーズのより大きなモデル **CogVideoX-5B** をオープンソース化しました。
-  モデルの推論性能を大幅に最適化し、推論のハードルを大幅に下げました。`GTX 1080TI` などの旧型GPUで **CogVideoX-2B**
-  を、`RTX 3060` などのミドル
-- 🔥**ニュース**: ```2024/8/20```: [VEnhancer](https://github.com/Vchitect/VEnhancer) は CogVideoX
-  が生成したビデオの強化をサポートしました。より高い解像度とより高品質なビデオレンダリングを実現します。[チュートリアル](tools/venhancer/README_ja.md)
-  に従って、ぜひお試しください。
-- 🔥**ニュース**: 2024/8/15: CogVideoX の依存関係である`SwissArmyTransformer`の依存が`0.4.12`
-  にアップグレードされました。これにより、微調整の際に`SwissArmyTransformer`
-  をソースコードからインストールする必要がなくなりました。同時に、`Tied VAE` 技術が `diffusers`
-  ライブラリの実装に適用されました。`diffusers` と `accelerate` ライブラリをソースコードからインストールしてください。CogVdideoX
-  の推論には 12GB の VRAM だけが必要です。 推論コードの修正が必要です。[cli_demo](inference/cli_demo.py)をご確認ください。
-- 🔥 **ニュース**: ```2024/8/12```: CogVideoX
-  論文がarxivにアップロードされました。ぜひ[論文](https://arxiv.org/abs/2408.06072)をご覧ください。
-- 🔥 **ニュース**: ```2024/8/7```: CogVideoX は `diffusers` バージョン 0.30.0 に統合されました。単一の 3090 GPU
-  で推論を実行できます。詳細については [コード](inference/cli_demo.py) を参照してください。
-- 🔥 **ニュース**: ```2024/8/6```: **CogVideoX-2B** で使用される **3D Causal VAE** もオープンソース化しました。これにより、ビデオをほぼ無損失で再構築できます。
-- 🔥 **ニュース**: ```2024/8/6```: **CogVideoX-2B**、CogVideoXシリーズのビデオ生成モデルの最初のモデルをオープンソース化しました。
-- 🌱 **ソース**: ```2022/5/19```: **CogVideo** (現在 `CogVideo` ブランチで確認できます)
-  をオープンソース化しました。これは、最初のオープンソースの事前学習済みテキストからビデオ生成モデルであり、技術的な詳細については [ICLR'23 CogVideo 論文](https://arxiv.org/abs/2205.15868)
+- 🔥🔥 **ニュース**: ```2024/10/10```: 技術報告書を更新し、より詳細なトレーニング情報とデモを追加しました。
+
+- 🔥🔥 **ニュース**: ```2024/10/09```: 飛書の[技術ドキュメント](https://zhipu-ai.feishu.cn/wiki/DHCjw1TrJiTyeukfc9RceoSRnCh)でCogVideoXの微調整ガイドを公開しています。分配の自由度をさらに高めるため、公開されているドキュメント内のすべての例が完全に再現可能です。
+
+- 🔥🔥 **ニュース**: ```2024/9/19```: CogVideoXシリーズの画像生成ビデオモデル **CogVideoX-5B-I2V**
+  をオープンソース化しました。このモデルは、画像を背景入力として使用し、プロンプトワードと組み合わせてビデオを生成することができ、より高い制御性を提供します。これにより、CogVideoXシリーズのモデルは、テキストからビデオ生成、ビデオの継続、画像からビデオ生成の3つのタスクをサポートするようになりました。オンラインでの[体験](https://huggingface.co/spaces/THUDM/CogVideoX-5B-Space)
+  をお楽しみください。
+
+- 🔥🔥 **ニュース**: ```2024/9/19```:
+  CogVideoXのトレーニングプロセスでビデオデータをテキスト記述に変換するために使用されるキャプションモデル [CogVLM2-Caption](https://huggingface.co/THUDM/cogvlm2-llama3-caption)
+  をオープンソース化しました。ダウンロードしてご利用ください。
+
+- 🔥 ```2024/8/27```: CogVideoXシリーズのより大きなモデル **CogVideoX-5B**
+  をオープンソース化しました。モデルの推論性能を大幅に最適化し、推論のハードルを大幅に下げました。`GTX 1080TI` などの旧型GPUで
+  **CogVideoX-2B** を、`RTX 3060` などのデスクトップGPUで **CogVideoX-5B**
+  モデルを実行できます。依存関係を更新・インストールするために、[要件](requirements.txt)
+  を厳守し、推論コードは [cli_demo](inference/cli_demo.py) を参照してください。さらに、**CogVideoX-2B** モデルのオープンソースライセンスが
+  **Apache 2.0 ライセンス** に変更されました。
+
+- 🔥 ```2024/8/6```: **CogVideoX-2B** 用の **3D Causal VAE** をオープンソース化しました。これにより、ビデオをほぼ無損失で再構築することができます。
+
+- 🔥 ```2024/8/6```: CogVideoXシリーズのビデオ生成モデルの最初のモデル、**CogVideoX-2B** をオープンソース化しました。
+
+- 🌱 **ソース**: ```2022/5/19```: CogVideoビデオ生成モデルをオープンソース化しました（現在、`CogVideo`
+  ブランチで確認できます）。これは、トランスフォーマーに基づく初のオープンソース大規模テキスト生成ビデオモデルです。技術的な詳細については、[ICLR'23論文](https://arxiv.org/abs/2205.15868)
   をご覧ください。
 
 **より強力なモデルが、より大きなパラメータサイズで登場予定です。お楽しみに！**
@@ -87,6 +91,12 @@ pip install -r requirements.txt
 ```
 
 次に [diffusers_demo](inference/cli_demo.py) を参照してください: 推論コードの詳細な説明が含まれており、一般的なパラメータの意味についても言及しています。
+
+量子化推論の詳細については、[diffusers-torchao](https://github.com/sayakpaul/diffusers-torchao/) を参照してください。Diffusers
+と TorchAO を使用することで、量子化推論も可能となり、メモリ効率の良い推論や、コンパイル時に場合によっては速度の向上が期待できます。A100
+および H100
+上でのさまざまな設定におけるメモリおよび時間のベンチマークの完全なリストは、[diffusers-torchao](https://github.com/sayakpaul/diffusers-torchao)
+に公開されています。
 
 ## Gallery
 
@@ -146,92 +156,91 @@ pip install -r requirements.txt
 
 ## モデル紹介
 
-CogVideoXは[清影](https://chatglm.cn/video?lang=en?fr=osm_cogvideo) 同源のオープンソース版動画生成モデルです。
-以下の表は、提供されている動画生成モデルに関する基本情報を示しています。
+CogVideoXは、[清影](https://chatglm.cn/video?fr=osm_cogvideox) と同源のオープンソース版ビデオ生成モデルです。
+以下の表に、提供しているビデオ生成モデルの基本情報を示します:
 
-<table style="border-collapse: collapse; width: 100%;">
+<table  style="border-collapse: collapse; width: 100%;">
   <tr>
     <th style="text-align: center;">モデル名</th>
     <th style="text-align: center;">CogVideoX-2B</th>
     <th style="text-align: center;">CogVideoX-5B</th>
-  </tr>
-  <tr>
-    <td style="text-align: center;">モデル紹介</td>
-    <td style="text-align: center;">入門モデルで、互換性を重視。運用および二次開発のコストが低い。</td>
-    <td style="text-align: center;">動画生成品質が高く、視覚効果がより優れた大型モデル。</td>
+    <th style="text-align: center;">CogVideoX-5B-I2V </th>
   </tr>
   <tr>
     <td style="text-align: center;">推論精度</td>
-    <td style="text-align: center;"><b>FP16*(推奨)</b>, BF16, FP32, FP8*(E4M3, E5M2), INT8, INT4は非対応</td>
-    <td style="text-align: center;"><b>BF16(推奨)</b>, FP16, FP32, FP8*(E4M3, E5M2), INT8, INT4は非対応</td>
+    <td style="text-align: center;"><b>FP16*(推奨)</b>, BF16, FP32, FP8*, INT8, INT4は非対応</td>
+    <td colspan="2" style="text-align: center;"><b>BF16(推奨)</b>, FP16, FP32, FP8*, INT8, INT4は非対応</td>
   </tr>
   <tr>
-    <td style="text-align: center;">シングルGPU VRAM消費量<br></td>
-    <td style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> FP16: 18GB <br><b>diffusers FP16: 4GBから*</b><br><b>diffusers INT8(torchao): 3.6GBから*</b></td>
-    <td style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> BF16: 26GB <br><b>diffusers BF16: 5GBから*</b><br><b>diffusers INT8(torchao): 4.4GBから*</b></td>
+    <td style="text-align: center;">単一GPUのメモリ消費<br></td>
+    <td style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> FP16: 18GB <br><b>diffusers FP16: 4GBから* </b><br><b>diffusers INT8(torchao): 3.6GBから*</b></td>
+    <td colspan="2" style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> BF16: 26GB <br><b>diffusers BF16 : 5GBから* </b><br><b>diffusers INT8(torchao): 4.4GBから* </b></td>
   </tr>
   <tr>
-    <td style="text-align: center;">複数GPUの推論メモリ消費量</td>
-    <td style="text-align: center;"><b>FP16: 10GB* using diffusers</b></td>
-    <td style="text-align: center;"><b>BF16: 15GB* using diffusers</b></td>
+    <td style="text-align: center;">マルチGPUのメモリ消費</td>
+    <td style="text-align: center;"><b>FP16: 10GB* using diffusers</b><br></td>
+    <td colspan="2" style="text-align: center;"><b>BF16: 15GB* using diffusers</b><br></td>
   </tr>
   <tr>
-    <td style="text-align: center;">推論速度<br>(Step = 50)</td>
-    <td style="text-align: center;">FP16: ~90* s</td>
-    <td style="text-align: center;">BF16: ~180* s</td>
+    <td style="text-align: center;">推論速度<br>(ステップ = 50, FP/BF16)</td>
+    <td style="text-align: center;">単一A100: 約90秒<br>単一H100: 約45秒</td>
+    <td colspan="2" style="text-align: center;">単一A100: 約180秒<br>単一H100: 約90秒</td>
   </tr>
   <tr>
-    <td style="text-align: center;">微調整精度</td>
+    <td style="text-align: center;">ファインチューニング精度</td>
     <td style="text-align: center;"><b>FP16</b></td>
-    <td style="text-align: center;"><b>BF16</b></td>
+    <td colspan="2" style="text-align: center;"><b>BF16</b></td>
   </tr>
   <tr>
-    <td style="text-align: center;">微調整時のメモリ消費量 (1GPUあたり)</td>
+    <td style="text-align: center;">ファインチューニング時のメモリ消費</td>
     <td style="text-align: center;">47 GB (bs=1, LORA)<br> 61 GB (bs=2, LORA)<br> 62GB (bs=1, SFT)</td>
-    <td style="text-align: center;">63 GB (bs=1, LORA)<br> 80 GB (bs=2, LORA)<br> 75GB (bs=1, SFT)</td>
+    <td style="text-align: center;">63 GB (bs=1, LORA)<br> 80 GB (bs=2, LORA)<br> 75GB (bs=1, SFT)<br></td>
+    <td style="text-align: center;">78 GB (bs=1, LORA)<br> 75GB (bs=1, SFT, 16GPU)<br></td>
   </tr>
   <tr>
     <td style="text-align: center;">プロンプト言語</td>
-    <td colspan="2" style="text-align: center;">英語*</td>
+    <td colspan="3" style="text-align: center;">英語*</td>
   </tr>
   <tr>
-    <td style="text-align: center;">プロンプトの長さ上限</td>
-    <td colspan="2" style="text-align: center;">226トークン</td>
+    <td style="text-align: center;">プロンプトの最大トークン数</td>
+    <td colspan="3" style="text-align: center;">226トークン</td>
   </tr>
   <tr>
-    <td style="text-align: center;">動画の長さ</td>
-    <td colspan="2" style="text-align: center;">6秒</td>
+    <td style="text-align: center;">ビデオの長さ</td>
+    <td colspan="3" style="text-align: center;">6秒</td>
   </tr>
   <tr>
     <td style="text-align: center;">フレームレート</td>
-    <td colspan="2" style="text-align: center;">8フレーム/秒</td>
+    <td colspan="3" style="text-align: center;">8フレーム/秒</td>
   </tr>
   <tr>
-    <td style="text-align: center;">動画の解像度</td>
-    <td colspan="2" style="text-align: center;">720 * 480、他の解像度はサポートされていません（微調整も含む）</td>
+    <td style="text-align: center;">ビデオ解像度</td>
+    <td colspan="3" style="text-align: center;">720 * 480、他の解像度は非対応(ファインチューニング含む)</td>
   </tr>
   <tr>
-    <td style="text-align: center;">位置エンコード</td>
+    <td style="text-align: center;">位置エンコーディング</td>
     <td style="text-align: center;">3d_sincos_pos_embed</td>
-    <td style="text-align: center;">3d_rope_pos_embed</td>
+    <td style="text-align: center;">3d_sincos_pos_embed</td>
+    <td style="text-align: center;">3d_rope_pos_embed + learnable_pos_embed</td>
   </tr>
   <tr>
     <td style="text-align: center;">ダウンロードリンク (Diffusers)</td>
     <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX-2b">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX-2b">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX-2b">🟣 WiseModel</a></td>
     <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX-5b">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX-5b">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX-5b">🟣 WiseModel</a></td>
+    <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX-5b-I2V">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX-5b-I2V">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX-5b-I2V">🟣 WiseModel</a></td>
   </tr>
   <tr>
     <td style="text-align: center;">ダウンロードリンク (SAT)</td>
-    <td colspan="2" style="text-align: center;"><a href="./sat/README_zh.md">SAT</a></td>
+    <td colspan="3" style="text-align: center;"><a href="./sat/README_ja.md">SAT</a></td>
   </tr>
 </table>
 
 **データ解説**
 
-+ `diffusers` ライブラリを使用してテストする際、`diffusers` ライブラリに付属するすべての最適化を有効にしました。このソリューションは、
-  **NVIDIA A100 / H100** 以外のデバイスでの実際のVRAM/メモリ使用量についてはテストされていません。一般的に、このソリューションは
-  **NVIDIA Ampereアーキテクチャ**
-  以上のすべてのデバイスに適応できます。最適化を無効にすると、VRAM使用量が大幅に増加し、表の約3倍のピークVRAMを使用しますが、速度は3-4倍向上します。以下の最適化の一部を選択的に無効にすることができます:
++ diffusersライブラリを使用してテストする際には、`diffusers`ライブラリが提供する全ての最適化が有効になっています。この方法は
+  **NVIDIA A100 / H100**以外のデバイスでのメモリ/メモリ消費のテストは行っていません。通常、この方法は**NVIDIA
+  Ampereアーキテクチャ**
+  以上の全てのデバイスに適応できます。最適化を無効にすると、メモリ消費は倍増し、ピークメモリ使用量は表の3倍になりますが、速度は約3〜4倍向上します。以下の最適化を部分的に無効にすることが可能です:
 
 ```
 pipe.enable_sequential_cpu_offload()
@@ -239,39 +248,56 @@ pipe.vae.enable_slicing()
 pipe.vae.enable_tiling()
 ```
 
-+ マルチGPU推論を行う際には、`enable_sequential_cpu_offload()` の最適化を無効にする必要があります。
-+ INT8モデルを使用すると推論速度が低下します。これは、ビデオ品質の損失を最小限に抑えながら、VRAMが少ないGPUでも正常に推論できるようにするためですが、推論速度は大幅に低下します。
-+ 2Bモデルは `FP16` 精度でトレーニングされ、5Bモデルは `BF16` 精度でトレーニングされています。推論には、モデルがトレーニングされた精度を使用することをお勧めします。
-+ [PytorchAO](https://github.com/pytorch/ao) および [Optimum-quanto](https://github.com/huggingface/optimum-quanto/)
-  は、CogVideoXのメモリ要件を削減するためにテキストエンコーダー、トランスフォーマー、およびVAEモジュールを量子化するために使用できます。これにより、無料のT4
-  ColabまたはVRAMが少ないGPUでモデルを実行できるようになります。また、TorchAO量子化は `torch.compile`
-  と完全に互換性があり、推論速度を大幅に向上させることができます。`NVIDIA H100` 以上のデバイスでは `FP8`
-  精度を使用する必要があり、これには `torch`、`torchao`、`diffusers`、および `accelerate` Python
-  パッケージをソースからインストールする必要があります。`CUDA 12.4` が推奨されます。
-+
-
-推論速度テストでも、上記のVRAM最適化スキームを使用しました。VRAMの最適化を行わない場合、推論速度は約10％向上します。量子化をサポートするのは `diffusers`
-バージョンのモデルのみです。
-
-+ モデルは英語入力のみをサポートしており、他の言語は大規模なモデルでのリファイン時に英語に翻訳できます。
++ マルチGPUで推論する場合、`enable_sequential_cpu_offload()`最適化を無効にする必要があります。
++ INT8モデルを使用すると推論速度が低下しますが、これはメモリの少ないGPUで正常に推論を行い、ビデオ品質の損失を最小限に抑えるための措置です。推論速度は大幅に低下します。
++ CogVideoX-2Bモデルは`FP16`精度でトレーニングされており、CogVideoX-5Bモデルは`BF16`
+  精度でトレーニングされています。推論時にはモデルがトレーニングされた精度を使用することをお勧めします。
++ [PytorchAO](https://github.com/pytorch/ao)および[Optimum-quanto](https://github.com/huggingface/optimum-quanto/)
+  は、CogVideoXのメモリ要件を削減するためにテキストエンコーダ、トランスフォーマ、およびVAEモジュールを量子化するために使用できます。これにより、無料のT4
+  Colabやより少ないメモリのGPUでモデルを実行することが可能になります。同様に重要なのは、TorchAOの量子化は`torch.compile`
+  と完全に互換性があり、推論速度を大幅に向上させることができる点です。`NVIDIA H100`およびそれ以上のデバイスでは`FP8`
+  精度を使用する必要があります。これには、`torch`、`torchao`、`diffusers`、`accelerate`
+  Pythonパッケージのソースコードからのインストールが必要です。`CUDA 12.4`の使用をお勧めします。
++ 推論速度テストも同様に、上記のメモリ最適化方法を使用しています。メモリ最適化を使用しない場合、推論速度は約10％向上します。
+  `diffusers`バージョンのモデルのみが量子化をサポートしています。
++ モデルは英語入力のみをサポートしており、他の言語は大規模モデルの改善を通じて英語に翻訳できます。
++ モデルのファインチューニングに使用されるメモリは`8 * H100`環境でテストされています。プログラムは自動的に`Zero 2`
+  最適化を使用しています。表に具体的なGPU数が記載されている場合、ファインチューニングにはその数以上のGPUが必要です。
 
 ## 友好的リンク
 
 コミュニティからの貢献を大歓迎し、私たちもオープンソースコミュニティに積極的に貢献しています。以下の作品はすでにCogVideoXに対応しており、ぜひご利用ください：
 
++ [CogVideoX-Fun](https://github.com/aigc-apps/CogVideoX-Fun): CogVideoX-Funは、CogVideoXアーキテクチャを基にした改良パイプラインで、自由な解像度と複数の起動方法をサポートしています。
++ [CogStudio](https://github.com/pinokiofactory/cogstudio): CogVideo の Gradio Web UI の別のリポジトリ。より高機能な Web UI をサポートします。
 + [Xorbits Inference](https://github.com/xorbitsai/inference):
   強力で包括的な分散推論フレームワークであり、ワンクリックで独自のモデルや最新のオープンソースモデルを簡単にデプロイできます。
-+ + [ComfyUI-CogVideoXWrapper](https://github.com/kijai/ComfyUI-CogVideoXWrapper) ComfyUIフレームワークを使用して、CogVideoXをワークフローに統合します。
++ [ComfyUI-CogVideoXWrapper](https://github.com/kijai/ComfyUI-CogVideoXWrapper)
+  ComfyUIフレームワークを使用して、CogVideoXをワークフローに統合します。
 + [VideoSys](https://github.com/NUS-HPC-AI-Lab/VideoSys): VideoSysは、使いやすく高性能なビデオ生成インフラを提供し、最新のモデルや技術を継続的に統合しています。
 + [AutoDLイメージ](https://www.codewithgpu.com/i/THUDM/CogVideo/CogVideoX-5b-demo): コミュニティメンバーが提供するHuggingface
   Spaceイメージのワンクリックデプロイメント。
-+ [Colab Space](https://github.com/camenduru/CogVideoX-5B-jupyter) ColabでJupyter Notebookを使用してCogVideoX-5Bモデルを実行します。
++ [インテリアデザイン微調整モデル](https://huggingface.co/collections/bertjiazheng/koolcogvideox-66e4762f53287b7f39f8f3ba): は、CogVideoXを基盤にした微調整モデルで、インテリアデザイン専用に設計されています。
++ [xDiT](https://github.com/xdit-project/xDiT): xDiTは、複数のGPUクラスター上でDiTsを並列推論するためのエンジンです。xDiTはリアルタイムの画像およびビデオ生成サービスをサポートしています。
 
 ## プロジェクト構造
 
 このオープンソースリポジトリは、**CogVideoX** オープンソースモデルの基本的な使用方法と微調整の例を迅速に開始するためのガイドです。
 
-### 推論
+### Colabでのクイックスタート
+
+無料のColab T4上で直接実行できる3つのプロジェクトを提供しています。
+
++ [CogVideoX-5B-T2V-Colab.ipynb](https://colab.research.google.com/drive/1pCe5s0bC_xuXbBlpvIH1z0kfdTLQPzCS?usp=sharing):
+  CogVideoX-5B テキストからビデオへの生成用Colabコード。
++ [CogVideoX-5B-T2V-Int8-Colab.ipynb](https://colab.research.google.com/drive/1DUffhcjrU-uz7_cpuJO3E_D4BaJT7OPa?usp=sharing):
+  CogVideoX-5B テキストからビデオへの量子化推論用Colabコード。1回の実行に約30分かかります。
++ [CogVideoX-5B-I2V-Colab.ipynb](https://colab.research.google.com/drive/17CqYCqSwz39nZAX2YyonDxosVKUZGzcX?usp=sharing):
+  CogVideoX-5B 画像からビデオへの生成用Colabコード。
++ [CogVideoX-5B-V2V-Colab.ipynb](https://colab.research.google.com/drive/1comfGAUJnChl5NwPuO8Ox5_6WCy4kbNN?usp=sharing):
+  CogVideoX-5B ビデオからビデオへの生成用Colabコード。
+
+### Inference
 
 + [cli_demo](inference/cli_demo.py): 推論コードの詳細な説明が含まれており、一般的なパラメータの意味についても言及しています。
 + [cli_demo_quantization](inference/cli_demo_quantization.py):
@@ -279,23 +305,20 @@ pipe.vae.enable_tiling()
   モデルの実行をサポートすることもできます。
 + [diffusers_vae_demo](inference/cli_vae_demo.py): VAE推論コードの実行には現在71GBのメモリが必要ですが、将来的には最適化される予定です。
 + [space demo](inference/gradio_composite_demo): Huggingface Spaceと同じGUIコードで、フレーム補間や超解像ツールが組み込まれています。
+
+<div style="text-align: center;">
+    <img src="resources/web_demo.png" style="width: 100%; height: auto;" />
+</div>
+
 + [convert_demo](inference/convert_demo.py):
   ユーザー入力をCogVideoXに適した形式に変換する方法。CogVideoXは長いキャプションでトレーニングされているため、入力テキストをLLMを使用してトレーニング分布と一致させる必要があります。デフォルトではGLM-4を使用しますが、GPT、Geminiなどの他のLLMに置き換えることもできます。
 + [gradio_web_demo](inference/gradio_web_demo.py): CogVideoX-2B / 5B モデルを使用して動画を生成する方法を示す、シンプルな
   Gradio Web UI デモです。私たちの Huggingface Space と同様に、このスクリプトを使用して Web デモを起動することができます。
 
-```shell
-cd inference
-# For Linux and Windows users
-python gradio_web_demo.py
+### finetune
 
-# For macOS with Apple Silicon users, Intel not supported, this maybe 20x slower than RTX 4090
-PYTORCH_ENABLE_MPS_FALLBACK=1 python gradio_web_demo.py
-```
-
-<div style="text-align: center;">
-    <img src="resources/gradio_demo.png" style="width: 100%; height: auto;" />
-</div>
++ [train_cogvideox_lora](finetune/README_ja.md): CogVideoX diffusers 微調整方法の詳細な説明が含まれています。このコードを使用して、自分のデータセットで
+  CogVideoX を微調整することができます。
 
 ### sat
 
@@ -306,8 +329,17 @@ PYTORCH_ENABLE_MPS_FALLBACK=1 python gradio_web_demo.py
 
 このフォルダには、モデル変換/キャプション生成などのツールが含まれています。
 
-+ [convert_weight_sat2hf](tools/convert_weight_sat2hf.py): SATモデルのウェイトをHuggingfaceモデルのウェイトに変換します。
-+ [caption_demo](tools/caption): キャプションツール、ビデオを理解し、テキストで出力するモデル。
++ [convert_weight_sat2hf](tools/convert_weight_sat2hf.py): SAT モデルの重みを Huggingface モデルの重みに変換します。
++ [caption_demo](tools/caption/README_ja.md): Caption ツール、ビデオを理解してテキストで出力するモデル。
++ [export_sat_lora_weight](tools/export_sat_lora_weight.py): SAT ファインチューニングモデルのエクスポートツール、SAT Lora
+  Adapter を diffusers 形式でエクスポートします。
++ [load_cogvideox_lora](tools/load_cogvideox_lora.py): diffusers 版のファインチューニングされた Lora Adapter
+  をロードするためのツールコード。
++ [llm_flux_cogvideox](tools/llm_flux_cogvideox/llm_flux_cogvideox.py): オープンソースのローカル大規模言語モデル +
+  Flux + CogVideoX を使用して自動的に動画を生成します。
++ [parallel_inference_xdit](tools/parallel_inference/parallel_inference_xdit.py)：
+[xDiT](https://github.com/xdit-project/xDiT)
+  によってサポートされ、ビデオ生成プロセスを複数の GPU で並列化します。
 
 ## CogVideo(ICLR'23)
 
@@ -347,23 +379,7 @@ CogVideoのデモは [https://models.aminer.cn/cogvideo](https://models.aminer.c
 }
 ```
 
-## オープンソースプロジェクト計画
-
-- [x] CogVideoX モデルオープンソース化
-    - [x] CogVideoX モデル推論例 (CLI / Web デモ)
-    - [x] CogVideoX オンライン体験例 (Huggingface Space)
-    - [x] CogVideoX オープンソースモデルAPIインターフェース例 (Huggingface)
-    - [x] CogVideoX モデル微調整例 (SAT)
-    - [ ] CogVideoX モデル微調整例 (Huggingface Diffusers)
-    - [X] CogVideoX-5B オープンソース化 (CogVideoX-2B スイートに適応)
-    - [X] CogVideoX 技術報告公開
-    - [X] CogVideoX 技術解説ビデオ
-- [ ] CogVideoX 周辺ツール
-    - [X] 基本的なビデオ超解像 / フレーム補間スイート
-    - [ ] 推論フレームワーク適応
-    - [ ] ComfyUI 完全エコシステムツール
-
-あなたの貢献をお待ちしています！詳細は[こちら](resources/contribute_zh.md)をクリックしてください。
+あなたの貢献をお待ちしています！詳細は[こちら](resources/contribute_ja.md)をクリックしてください。
 
 ## ライセンス契約
 
@@ -372,5 +388,5 @@ CogVideoのデモは [https://models.aminer.cn/cogvideo](https://models.aminer.c
 CogVideoX-2B モデル (対応するTransformersモジュールやVAEモジュールを含む) は
 [Apache 2.0 License](LICENSE) の下で公開されています。
 
-CogVideoX-5B モデル (Transformersモジュール) は
+CogVideoX-5B モデル（Transformers モジュール、画像生成ビデオとテキスト生成ビデオのバージョンを含む） は
 [CogVideoX LICENSE](https://huggingface.co/THUDM/CogVideoX-5b/blob/main/LICENSE) の下で公開されています。
