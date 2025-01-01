@@ -18,35 +18,37 @@ Experience the CogVideoX-5B model online at <a href="https://huggingface.co/spac
 </p>
 <p align="center">
 📍 Visit <a href="https://chatglm.cn/video?lang=en?fr=osm_cogvideo">QingYing</a> and <a href="https://open.bigmodel.cn/?utm_campaign=open&_channel_track_key=OWTVNma9">API Platform</a> to experience larger-scale commercial video generation models.
-
-We have publicly shared the feishu <a href="https://zhipu-ai.feishu.cn/wiki/DHCjw1TrJiTyeukfc9RceoSRnCh">technical documentation</a> on CogVideoX fine-tuning scenarios, aiming to further increase the flexibility of distribution. All examples in the public documentation can be fully replicated.
-
-CogVideoX fine-tuning is divided into SFT and LoRA fine-tuning. Based on our publicly available data processing scripts, you can more easily align specific styles in vertical scenarios. We provide guidance for ablation experiments on character image (IP) and scene style, further reducing the difficulty of replicating fine-tuning tasks.
-
-We look forward to creative explorations and contributions.
 </p>
 
 ## Project Updates
 
-- 🔥🔥 **News**: ```2024/10/10```: We have updated our technical report, including more training details and demos.
-
-- 🔥🔥 **News**: ```2024/10/09```: We have publicly released the [technical documentation](https://zhipu-ai.feishu.cn/wiki/DHCjw1TrJiTyeukfc9RceoSRnCh) for CogVideoX fine-tuning on Feishu, further increasing distribution flexibility. All examples in the public documentation can be fully reproduced.
-
-- 🔥🔥 **News**: ```2024/9/25```: CogVideoX web demo is available on Replicate. Try the text-to-video model **CogVideoX-5B** here [![Replicate](https://replicate.com/chenxwh/cogvideox-t2v/badge)](https://replicate.com/chenxwh/cogvideox-t2v) and image-to-video model **CogVideoX-5B-I2V** here [![Replicate](https://replicate.com/chenxwh/cogvideox-i2v/badge)](https://replicate.com/chenxwh/cogvideox-i2v).
-- 🔥🔥 **News**: ```2024/9/19```: We have open-sourced the CogVideoX series image-to-video model **CogVideoX-5B-I2V**.
+- 🔥🔥 **News**: ```2024/11/15```: We released the `CogVideoX1.5` model in the diffusers version. Only minor parameter adjustments are needed to continue using previous code.
+- 🔥 News: ```2024/11/08```: We have released the CogVideoX1.5 model. CogVideoX1.5 is an upgraded version of the open-source model CogVideoX.
+The CogVideoX1.5-5B series supports 10-second videos with higher resolution, and CogVideoX1.5-5B-I2V supports video generation at any resolution. 
+The SAT code has already been updated, while the diffusers version is still under adaptation. Download the SAT version code [here](https://huggingface.co/THUDM/CogVideoX1.5-5B-SAT).
+- 🔥 **News**: ```2024/10/13```: A more cost-effective fine-tuning framework for `CogVideoX-5B` that works with a single
+  4090 GPU, [cogvideox-factory](https://github.com/a-r-r-o-w/cogvideox-factory), has been released. It supports
+  fine-tuning with multiple resolutions. Feel free to use it!
+- 🔥 **News**: ```2024/10/10```: We have updated our technical report. Please
+  click [here](https://arxiv.org/pdf/2408.06072) to view it. More training details and a demo have been added. To see
+  the demo, click [here](https://yzy-thu.github.io/CogVideoX-demo/).- 🔥 **News**: ```2024/10/09```: We have publicly
+  released the [technical documentation](https://zhipu-ai.feishu.cn/wiki/DHCjw1TrJiTyeukfc9RceoSRnCh) for CogVideoX
+  fine-tuning on Feishu, further increasing distribution flexibility. All examples in the public documentation can be
+  fully reproduced.
+- 🔥 **News**: ```2024/9/19```: We have open-sourced the CogVideoX series image-to-video model **CogVideoX-5B-I2V**.
   This model can take an image as a background input and generate a video combined with prompt words, offering greater
   controllability. With this, the CogVideoX series models now support three tasks: text-to-video generation, video
   continuation, and image-to-video generation. Welcome to try it online
   at [Experience](https://huggingface.co/spaces/THUDM/CogVideoX-5B-Space).
-- 🔥🔥 **News**: ```2024/9/19```: The Caption
+- 🔥 ```2024/9/19```: The Caption
   model [CogVLM2-Caption](https://huggingface.co/THUDM/cogvlm2-llama3-caption), used in the training process of
   CogVideoX to convert video data into text descriptions, has been open-sourced. Welcome to download and use it.
 - 🔥 ```2024/8/27```: We have open-sourced a larger model in the CogVideoX series, **CogVideoX-5B**. We have
-  significantly optimized the model's inference performance, greatly lowering the inference threshold. You can run *
-  *CogVideoX-2B** on older GPUs like `GTX 1080TI`, and **CogVideoX-5B** on desktop GPUs like `RTX 3060`. Please strictly
+  significantly optimized the model's inference performance, greatly lowering the inference threshold. 
+  You can run **CogVideoX-2B** on older GPUs like `GTX 1080TI`, and **CogVideoX-5B** on desktop GPUs like `RTX 3060`. Please strictly
   follow the [requirements](requirements.txt) to update and install dependencies, and refer
-  to [cli_demo](inference/cli_demo.py) for inference code. Additionally, the open-source license for the **CogVideoX-2B
-  ** model has been changed to the **Apache 2.0 License**.
+  to [cli_demo](inference/cli_demo.py) for inference code. Additionally, the open-source license for 
+  the **CogVideoX-2B** model has been changed to the **Apache 2.0 License**.
 - 🔥 ```2024/8/6```: We have open-sourced **3D Causal VAE**, used for **CogVideoX-2B**, which can reconstruct videos with
   almost no loss.
 - 🔥 ```2024/8/6```: We have open-sourced the first model of the CogVideoX series video generation models, **CogVideoX-2B
@@ -59,19 +61,24 @@ We look forward to creative explorations and contributions.
 
 Jump to a specific section:
 
-- [Quick Start](#Quick-Start)
-    - [SAT](#sat)
-    - [Diffusers](#Diffusers)
-- [CogVideoX-2B Video Works](#cogvideox-2b-gallery)
-- [Introduction to the CogVideoX Model](#Model-Introduction)
-- [Full Project Structure](#project-structure)
-    - [Inference](#inference)
-    - [SAT](#sat)
-    - [Tools](#tools)
-- [Introduction to CogVideo(ICLR'23) Model](#cogvideoiclr23)
-- [Citations](#Citation)
-- [Open Source Project Plan](#Open-Source-Project-Plan)
-- [Model License](#Model-License)
+- [Quick Start](#quick-start)
+  - [Prompt Optimization](#prompt-optimization)
+  - [SAT](#sat)
+  - [Diffusers](#diffusers)
+- [Gallery](#gallery)
+  - [CogVideoX-5B](#cogvideox-5b)
+  - [CogVideoX-2B](#cogvideox-2b)
+- [Model Introduction](#model-introduction)
+- [Friendly Links](#friendly-links)
+- [Project Structure](#project-structure)
+  - [Quick Start with Colab](#quick-start-with-colab)
+  - [Inference](#inference)
+  - [finetune](#finetune)
+  - [sat](#sat-1)
+  - [Tools](#tools)
+- [CogVideo(ICLR'23)](#cogvideoiclr23)
+- [Citation](#citation)
+- [Model-License](#model-license)
 
 ## Quick Start
 
@@ -171,82 +178,88 @@ models we currently offer, along with their foundational information.
 <table style="border-collapse: collapse; width: 100%;">
   <tr>
     <th style="text-align: center;">Model Name</th>
+    <th style="text-align: center;">CogVideoX1.5-5B (Latest)</th>
+    <th style="text-align: center;">CogVideoX1.5-5B-I2V (Latest)</th>
     <th style="text-align: center;">CogVideoX-2B</th>
     <th style="text-align: center;">CogVideoX-5B</th>
     <th style="text-align: center;">CogVideoX-5B-I2V</th>
   </tr>
   <tr>
-    <td style="text-align: center;">Model Description</td>
-    <td style="text-align: center;">Entry-level model, balancing compatibility. Low cost for running and secondary development.</td>
-    <td style="text-align: center;">Larger model with higher video generation quality and better visual effects.</td>
-    <td style="text-align: center;">CogVideoX-5B image-to-video version.</td>
+    <td style="text-align: center;">Release Date</td>
+    <th style="text-align: center;">November 8, 2024</th>
+    <th style="text-align: center;">November 8, 2024</th>
+    <th style="text-align: center;">August 6, 2024</th>
+    <th style="text-align: center;">August 27, 2024</th>
+    <th style="text-align: center;">September 19, 2024</th>
+  </tr>
+  <tr>
+    <td style="text-align: center;">Video Resolution</td>
+    <td colspan="1" style="text-align: center;">1360 * 768</td>
+    <td colspan="1" style="text-align: center;"> Min(W, H) = 768 <br> 768 ≤ Max(W, H) ≤ 1360 <br> Max(W, H) % 16 = 0 </td>
+    <td colspan="3" style="text-align: center;">720 * 480</td>
   </tr>
   <tr>
     <td style="text-align: center;">Inference Precision</td>
-    <td style="text-align: center;"><b>FP16*(recommended)</b>, BF16, FP32, FP8*, INT8, not supported: INT4</td>
-    <td colspan="2" style="text-align: center;"><b>BF16 (recommended)</b>, FP16, FP32, FP8*, INT8, not supported: INT4</td>
+    <td colspan="2" style="text-align: center;"><b>BF16 (Recommended)</b>, FP16, FP32, FP8*, INT8, Not supported: INT4</td>
+    <td style="text-align: center;"><b>FP16*(Recommended)</b>, BF16, FP32, FP8*, INT8, Not supported: INT4</td>
+    <td colspan="2" style="text-align: center;"><b>BF16 (Recommended)</b>, FP16, FP32, FP8*, INT8, Not supported: INT4</td>
   </tr>
   <tr>
     <td style="text-align: center;">Single GPU Memory Usage<br></td>
-    <td style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> FP16: 18GB <br><b>diffusers FP16: from 4GB* </b><br><b>diffusers INT8 (torchao): from 3.6GB*</b></td>
-    <td colspan="2" style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> BF16: 26GB <br><b>diffusers BF16: from 5GB* </b><br><b>diffusers INT8 (torchao): from 4.4GB*</b></td>
+    <td colspan="2" style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> BF16: 76GB <br><b>diffusers BF16: from 10GB*</b><br><b>diffusers INT8(torchao): from 7GB*</b></td>
+    <td style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> FP16: 18GB <br><b>diffusers FP16: 4GB minimum* </b><br><b>diffusers INT8 (torchao): 3.6GB minimum*</b></td>
+    <td colspan="2" style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> BF16: 26GB <br><b>diffusers BF16 : 5GB minimum* </b><br><b>diffusers INT8 (torchao): 4.4GB minimum* </b></td>
   </tr>
   <tr>
-    <td style="text-align: center;">Multi-GPU Inference Memory Usage</td>
+    <td style="text-align: center;">Multi-GPU Memory Usage</td>
+    <td colspan="2" style="text-align: center;"><b>BF16: 24GB* using diffusers</b><br></td>
     <td style="text-align: center;"><b>FP16: 10GB* using diffusers</b><br></td>
     <td colspan="2" style="text-align: center;"><b>BF16: 15GB* using diffusers</b><br></td>
   </tr>
   <tr>
     <td style="text-align: center;">Inference Speed<br>(Step = 50, FP/BF16)</td>
+    <td colspan="2" style="text-align: center;">Single A100: ~1000 seconds (5-second video)<br>Single H100: ~550 seconds (5-second video)</td>
     <td style="text-align: center;">Single A100: ~90 seconds<br>Single H100: ~45 seconds</td>
     <td colspan="2" style="text-align: center;">Single A100: ~180 seconds<br>Single H100: ~90 seconds</td>
   </tr>
   <tr>
-    <td style="text-align: center;">Fine-tuning Precision</td>
-    <td style="text-align: center;"><b>FP16</b></td>
-    <td colspan="2" style="text-align: center;"><b>BF16</b></td>
-  </tr>
-  <tr>
-    <td style="text-align: center;">Fine-tuning Memory Usage</td>
-    <td style="text-align: center;">47 GB (bs=1, LORA)<br> 61 GB (bs=2, LORA)<br> 62GB (bs=1, SFT)</td>
-    <td style="text-align: center;">63 GB (bs=1, LORA)<br> 80 GB (bs=2, LORA)<br> 75GB (bs=1, SFT)<br></td>
-    <td style="text-align: center;">78 GB (bs=1, LORA)<br> 75GB (bs=1, SFT, 16GPU)<br></td>
-  </tr>
-  <tr>
     <td style="text-align: center;">Prompt Language</td>
-    <td colspan="3" style="text-align: center;">English*</td>
+    <td colspan="5" style="text-align: center;">English*</td>
   </tr>
   <tr>
-    <td style="text-align: center;">Maximum Prompt Length</td>
+    <td style="text-align: center;">Prompt Token Limit</td>
+    <td colspan="2" style="text-align: center;">224 Tokens</td>
     <td colspan="3" style="text-align: center;">226 Tokens</td>
   </tr>
   <tr>
     <td style="text-align: center;">Video Length</td>
-    <td colspan="3" style="text-align: center;">6 Seconds</td>
+    <td colspan="2" style="text-align: center;">5 seconds or 10 seconds</td>
+    <td colspan="3" style="text-align: center;">6 seconds</td>
   </tr>
   <tr>
     <td style="text-align: center;">Frame Rate</td>
-    <td colspan="3" style="text-align: center;">8 Frames / Second</td>
+    <td colspan="2" style="text-align: center;">16 frames / second </td>
+    <td colspan="3" style="text-align: center;">8 frames / second </td>
   </tr>
   <tr>
-    <td style="text-align: center;">Video Resolution</td>
-    <td colspan="3" style="text-align: center;">720 x 480, no support for other resolutions (including fine-tuning)</td>
-  </tr>
-    <tr>
     <td style="text-align: center;">Position Encoding</td>
-    <td style="text-align: center;">3d_sincos_pos_embed</td>
-    <td style="text-align: center;">3d_sincos_pos_embed</td>
+    <td colspan="2" style="text-align: center;">3d_rope_pos_embed</td>
+    <td style="text-align: center;">3d_sincos_pos_embed</td> 
+    <td style="text-align: center;">3d_rope_pos_embed</td>
     <td style="text-align: center;">3d_rope_pos_embed + learnable_pos_embed</td>
   </tr>
   <tr>
     <td style="text-align: center;">Download Link (Diffusers)</td>
+    <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX1.5-5B">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX1.5-5B">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX1.5-5B">🟣 WiseModel</a></td>
+    <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX1.5-5B-I2V">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX1.5-5B-I2V">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX1.5-5B-I2V">🟣 WiseModel</a></td>
     <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX-2b">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX-2b">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX-2b">🟣 WiseModel</a></td>
     <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX-5b">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX-5b">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX-5b">🟣 WiseModel</a></td>
     <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX-5b-I2V">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX-5b-I2V">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX-5b-I2V">🟣 WiseModel</a></td>
   </tr>
   <tr>
     <td style="text-align: center;">Download Link (SAT)</td>
-    <td colspan="3" style="text-align: center;"><a href="./sat/README.md">SAT</a></td>
+    <td colspan="2" style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX1.5-5b-SAT">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX1.5-5b-SAT">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX1.5-5b-SAT">🟣 WiseModel</a></td>
+    <td colspan="3" style="text-align: center;"><a href="./sat/README_zh.md">SAT</a></td>
   </tr>
 </table>
 
@@ -273,15 +286,12 @@ pipe.vae.enable_tiling()
   used to quantize the text encoder, transformer, and VAE modules to reduce the memory requirements of CogVideoX. This
   allows the model to run on free T4 Colabs or GPUs with smaller memory! Also, note that TorchAO quantization is fully
   compatible with `torch.compile`, which can significantly improve inference speed. FP8 precision must be used on
-  devices with NVIDIA H100 and above, requiring source installation of `torch`, `torchao`, `diffusers`, and `accelerate`
-  Python packages. CUDA 12.4 is recommended.
+  devices with NVIDIA H100 and above, requiring source installation of `torch`, `torchao` Python packages. CUDA 12.4 is recommended.
 + The inference speed tests also used the above memory optimization scheme. Without memory optimization, inference speed
   increases by about 10%. Only the `diffusers` version of the model supports quantization.
 + The model only supports English input; other languages can be translated into English for use via large model
   refinement.
-+ The memory usage of model fine-tuning is tested in an `8 * H100` environment, and the program automatically
-  uses `Zero 2` optimization. If a specific number of GPUs is marked in the table, that number or more GPUs must be used
-  for fine-tuning.
+
 
 ## Friendly Links
 
@@ -304,8 +314,20 @@ works have already been adapted for CogVideoX, and we invite everyone to use the
   Space image provided by community members.
 + [Interior Design Fine-Tuning Model](https://huggingface.co/collections/bertjiazheng/koolcogvideox-66e4762f53287b7f39f8f3ba):
   is a fine-tuned model based on CogVideoX, specifically designed for interior design.
-+ [xDiT](https://github.com/xdit-project/xDiT): xDiT is a scalable inference engine for Diffusion Transformers (DiTs) 
-   on multiple GPU Clusters. xDiT supports real-time image and video generations services.
++ [xDiT](https://github.com/xdit-project/xDiT): xDiT is a scalable inference engine for Diffusion Transformers (DiTs)
+  on multiple GPU Clusters. xDiT supports real-time image and video generations services.
+  [cogvideox-factory](https://github.com/a-r-r-o-w/cogvideox-factory): A cost-effective
+  fine-tuning framework for CogVideoX, compatible with the `diffusers` version model. Supports more resolutions, and
+  fine-tuning CogVideoX-5B can be done with a single 4090 GPU.
++ [CogVideoX-Interpolation](https://github.com/feizc/CogvideX-Interpolation): A pipeline based on the modified CogVideoX
+  structure, aimed at providing greater flexibility for keyframe interpolation generation.
++ [DiffSynth-Studio](https://github.com/modelscope/DiffSynth-Studio): DiffSynth Studio is a diffusion engine. It has
+  restructured the architecture, including text encoders, UNet, VAE, etc., enhancing computational performance while
+  maintaining compatibility with open-source community models. The framework has been adapted for CogVideoX.
++ [CogVideoX-Controlnet](https://github.com/TheDenk/cogvideox-controlnet): A simple ControlNet module code that includes the CogVideoX model.
++ [VideoTuna](https://github.com/VideoVerses/VideoTuna): VideoTuna is the first repo that integrates multiple AI video generation models for text-to-video, image-to-video, text-to-image generation.
++ [ConsisID](https://github.com/PKU-YuanGroup/ConsisID): An identity-preserving text-to-video generation model, bases on CogVideoX-5B, which keep the face consistent in the generated video by frequency decomposition.
++ [A Step by Step Tutorial](https://www.youtube.com/watch?v=5UCkMzP2VLE&ab_channel=SECourses): A step-by-step guide on installing and optimizing the CogVideoX1.5-5B-I2V model in Windows and cloud environments. Special thanks to the [FurkanGozukara](https://github.com/FurkanGozukara) for his effort and support!
 
 ## Project Structure
 
@@ -372,7 +394,7 @@ This folder contains some tools for model conversion / caption generation, etc.
 + [llm_flux_cogvideox](tools/llm_flux_cogvideox/llm_flux_cogvideox.py): Automatically generate videos using an
   open-source local large language model + Flux + CogVideoX.
 + [parallel_inference_xdit](tools/parallel_inference/parallel_inference_xdit.py):
-Supported by [xDiT](https://github.com/xdit-project/xDiT), parallelize the
+  Supported by [xDiT](https://github.com/xdit-project/xDiT), parallelize the
   video generation process on multiple GPUs.
 
 ## CogVideo(ICLR'23)
@@ -416,7 +438,7 @@ hands-on practice on text-to-video generation. *The original input is in Chinese
 
 We welcome your contributions! You can click [here](resources/contribute.md) for more information.
 
-## License Agreement
+## Model-License
 
 The code in this repository is released under the [Apache 2.0 License](LICENSE).
 

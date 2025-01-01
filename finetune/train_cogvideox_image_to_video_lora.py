@@ -573,36 +573,36 @@ class VideoDataset(Dataset):
         return instance_prompts, instance_videos
 
     def _resize_for_rectangle_crop(self, arr):
-            image_size = self.height, self.width
-            reshape_mode = self.video_reshape_mode
-            if arr.shape[3] / arr.shape[2] > image_size[1] / image_size[0]:
-                arr = resize(
-                    arr,
-                    size=[image_size[0], int(arr.shape[3] * image_size[0] / arr.shape[2])],
-                    interpolation=InterpolationMode.BICUBIC,
-                )
-            else:
-                arr = resize(
-                    arr,
-                    size=[int(arr.shape[2] * image_size[1] / arr.shape[3]), image_size[1]],
-                    interpolation=InterpolationMode.BICUBIC,
-                )
+        image_size = self.height, self.width
+        reshape_mode = self.video_reshape_mode
+        if arr.shape[3] / arr.shape[2] > image_size[1] / image_size[0]:
+            arr = resize(
+                arr,
+                size=[image_size[0], int(arr.shape[3] * image_size[0] / arr.shape[2])],
+                interpolation=InterpolationMode.BICUBIC,
+            )
+        else:
+            arr = resize(
+                arr,
+                size=[int(arr.shape[2] * image_size[1] / arr.shape[3]), image_size[1]],
+                interpolation=InterpolationMode.BICUBIC,
+            )
 
-            h, w = arr.shape[2], arr.shape[3]
-            arr = arr.squeeze(0)
+        h, w = arr.shape[2], arr.shape[3]
+        arr = arr.squeeze(0)
 
-            delta_h = h - image_size[0]
-            delta_w = w - image_size[1]
+        delta_h = h - image_size[0]
+        delta_w = w - image_size[1]
 
-            if reshape_mode == "random" or reshape_mode == "none":
-                top = np.random.randint(0, delta_h + 1)
-                left = np.random.randint(0, delta_w + 1)
-            elif reshape_mode == "center":
-                top, left = delta_h // 2, delta_w // 2
-            else:
-                raise NotImplementedError
-            arr = TT.functional.crop(arr, top=top, left=left, height=image_size[0], width=image_size[1])
-            return arr
+        if reshape_mode == "random" or reshape_mode == "none":
+            top = np.random.randint(0, delta_h + 1)
+            left = np.random.randint(0, delta_w + 1)
+        elif reshape_mode == "center":
+            top, left = delta_h // 2, delta_w // 2
+        else:
+            raise NotImplementedError
+        arr = TT.functional.crop(arr, top=top, left=left, height=image_size[0], width=image_size[1])
+        return arr
 
     def _preprocess_data(self):
         try:
@@ -622,8 +622,7 @@ class VideoDataset(Dataset):
         videos = []
 
         for filename in self.instance_video_paths:
-            progress_dataset_bar.update(1)
-            video_reader = decord.VideoReader(uri=filename.as_posix(), width=self.width, height=self.height)
+            video_reader = decord.VideoReader(uri=filename.as_posix())
             video_num_frames = len(video_reader)
 
             start_frame = min(self.skip_frames_start, video_num_frames)
@@ -651,8 +650,12 @@ class VideoDataset(Dataset):
             # Training transforms
             frames = (frames - 127.5) / 127.5
             frames = frames.permute(0, 3, 1, 2) # [F, C, H, W]
+            progress_dataset_bar.set_description(
+                f"Loading progress Resizing video from {frames.shape[2]}x{frames.shape[3]} to {self.height}x{self.width}"
+            )
             frames = self._resize_for_rectangle_crop(frames)
             videos.append(frames.contiguous())  # [F, C, H, W]
+            progress_dataset_bar.update(1)
 
         progress_dataset_bar.close()
 
@@ -909,6 +912,7 @@ def prepare_rotary_positional_embeddings(
     num_frames: int,
     vae_scale_factor_spatial: int = 8,
     patch_size: int = 2,
+    patch_size_t: int = 1,
     attention_head_dim: int = 64,
     device: Optional[torch.device] = None,
     base_height: int = 480,
@@ -919,12 +923,15 @@ def prepare_rotary_positional_embeddings(
     base_size_width = base_width // (vae_scale_factor_spatial * patch_size)
     base_size_height = base_height // (vae_scale_factor_spatial * patch_size)
 
+    p_t = patch_size_t
+    base_num_frames = (num_frames + p_t - 1) // p_t
+
     grid_crops_coords = get_resize_crop_region_for_grid((grid_height, grid_width), base_size_width, base_size_height)
     freqs_cos, freqs_sin = get_3d_rotary_pos_embed(
         embed_dim=attention_head_dim,
         crops_coords=grid_crops_coords,
         grid_size=(grid_height, grid_width),
-        temporal_size=num_frames,
+        temporal_size=base_num_frames,
     )
 
     freqs_cos = freqs_cos.to(device=device)
@@ -1239,11 +1246,11 @@ def main(args):
 
     use_deepspeed_optimizer = (
         accelerator.state.deepspeed_plugin is not None
-        and "optimizer" in accelerator.state.deepspeed_plugin.deepspeed_config
+        and accelerator.state.deepspeed_plugin.deepspeed_config.get("optimizer", "none").lower() != "none"
     )
     use_deepspeed_scheduler = (
         accelerator.state.deepspeed_plugin is not None
-        and "scheduler" not in accelerator.state.deepspeed_plugin.deepspeed_config
+        and accelerator.state.deepspeed_plugin.deepspeed_config.get("scheduler", "none").lower() != "none"
     )
 
     optimizer = get_optimizer(args, params_to_optimize, use_deepspeed=use_deepspeed_optimizer)
@@ -1276,7 +1283,7 @@ def main(args):
 
         image_noise_sigma = torch.normal(mean=-3.0, std=0.5, size=(1,), device=image.device)
         image_noise_sigma = torch.exp(image_noise_sigma).to(dtype=image.dtype)
-        noisy_image = torch.randn_like(image) * image_noise_sigma[:, None, None, None, None]
+        noisy_image = image + torch.randn_like(image) * image_noise_sigma[:, None, None, None, None]
         image_latent_dist = vae.encode(noisy_image).latent_dist
 
         return latent_dist, image_latent_dist
@@ -1354,10 +1361,9 @@ def main(args):
         from accelerate.utils import DummyScheduler
 
         lr_scheduler = DummyScheduler(
-            name=args.lr_scheduler,
             optimizer=optimizer,
             total_num_steps=args.max_train_steps * accelerator.num_processes,
-            num_warmup_steps=args.lr_warmup_steps * accelerator.num_processes,
+            warmup_num_steps=args.lr_warmup_steps * accelerator.num_processes,
         )
     else:
         lr_scheduler = get_scheduler(
@@ -1479,6 +1485,7 @@ def main(args):
                         num_frames=num_frames,
                         vae_scale_factor_spatial=vae_scale_factor_spatial,
                         patch_size=model_config.patch_size,
+                        patch_size_t=model_config.patch_size_t,
                         attention_head_dim=model_config.attention_head_dim,
                         device=accelerator.device,
                     )

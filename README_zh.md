@@ -1,9 +1,8 @@
 # CogVideo & CogVideoX
 
-[Read this in English](./README_zh.md)
+[Read this in English](./README.md)
 
 [日本語で読む](./README_ja.md)
-
 
 <div align="center">
 <img src=resources/logo.svg width="50%"/>
@@ -19,29 +18,29 @@
 </p>
 <p align="center">
 📍 前往<a href="https://chatglm.cn/video?fr=osm_cogvideox"> 清影</a> 和 <a href="https://open.bigmodel.cn/?utm_campaign=open&_channel_track_key=OWTVNma9"> API平台</a> 体验更大规模的商业版视频生成模型。
-
-我们在飞书<a href="https://zhipu-ai.feishu.cn/wiki/DHCjw1TrJiTyeukfc9RceoSRnCh">技术文档</a>公开CogVideoX微调指导，以进一步增加分发自由度，公开文档中所有示例可以完全复现
-
-CogVideoX微调方式分为SFT和lora微调，在我们公开的数据处理的脚本上，你可以更加便捷的在垂类的场景上完成某些风格对齐，我们提供了人物形象（IP）和场景风格的消融实验指导，进一步减少复现微调任务的难度
-我们期待更加有创意探索加入[新月脸]
 </p>
 
 ## 项目更新
 
-- 🔥🔥 **News**: ```2024/10/10```: 我们更新了我们的技术报告，附上了更多的训练细节和demo
-
-- 🔥🔥 **News**: ```2024/10/09```: 我们在飞书[技术文档](https://zhipu-ai.feishu.cn/wiki/DHCjw1TrJiTyeukfc9RceoSRnCh")公开CogVideoX微调指导，以进一步增加分发自由度，公开文档中所有示例可以完全复现
-- 🔥🔥 **News**: ```2024/9/19```: 我们开源 CogVideoX 系列图生视频模型 **CogVideoX-5B-I2V**
+- 🔥🔥 **News**: ```2024/11/15```: 我们发布 `CogVideoX1.5` 模型的diffusers版本，仅需调整部分参数仅可沿用之前的代码。
+- 🔥 **News**: ```2024/11/08```: 我们发布 `CogVideoX1.5` 模型。CogVideoX1.5 是 CogVideoX 开源模型的升级版本。 
+CogVideoX1.5-5B 系列模型支持 **10秒** 长度的视频和更高的分辨率，其中 `CogVideoX1.5-5B-I2V` 支持 **任意分辨率** 的视频生成，SAT代码已经更新。`diffusers`版本还在适配中。SAT版本代码前往 [这里](https://huggingface.co/THUDM/CogVideoX1.5-5B-SAT) 下载。
+- 🔥**News**: ```2024/10/13```: 成本更低，单卡4090可微调 `CogVideoX-5B`
+  的微调框架[cogvideox-factory](https://github.com/a-r-r-o-w/cogvideox-factory)已经推出，多种分辨率微调，欢迎使用。
+- 🔥 **News**: ```2024/10/10```: 我们更新了我们的技术报告,请点击 [这里](https://arxiv.org/pdf/2408.06072)
+  查看，附上了更多的训练细节和demo，关于demo，点击[这里](https://yzy-thu.github.io/CogVideoX-demo/) 查看。
+- 🔥 **News**: ```2024/10/09```: 我们在飞书[技术文档](https://zhipu-ai.feishu.cn/wiki/DHCjw1TrJiTyeukfc9RceoSRnCh")
+  公开CogVideoX微调指导，以进一步增加分发自由度，公开文档中所有示例可以完全复现
+- 🔥 **News**: ```2024/9/19```: 我们开源 CogVideoX 系列图生视频模型 **CogVideoX-5B-I2V**
   。该模型可以将一张图像作为背景输入，结合提示词一起生成视频，具有更强的可控性。
   至此，CogVideoX系列模型已经支持文本生成视频，视频续写，图片生成视频三种任务。欢迎前往在线[体验](https://huggingface.co/spaces/THUDM/CogVideoX-5B-Space)。
-- 🔥🔥 **News**: ```2024/9/19```: CogVideoX 训练过程中用于将视频数据转换为文本描述的 Caption
+- 🔥 **News**: ```2024/9/19```: CogVideoX 训练过程中用于将视频数据转换为文本描述的 Caption
   模型 [CogVLM2-Caption](https://huggingface.co/THUDM/cogvlm2-llama3-caption)
   已经开源。欢迎前往下载并使用。
 - 🔥 ```2024/8/27```:  我们开源 CogVideoX 系列更大的模型 **CogVideoX-5B**
   。我们大幅度优化了模型的推理性能，推理门槛大幅降低，您可以在 `GTX 1080TI` 等早期显卡运行 **CogVideoX-2B**，在 `RTX 3060`
   等桌面端甜品卡运行 **CogVideoX-5B** 模型。 请严格按照[要求](requirements.txt)
-  更新安装依赖，推理代码请查看 [cli_demo](inference/cli_demo.py)。同时，**CogVideoX-2B** 模型开源协议已经修改为**Apache 2.0
-  协议**。
+  更新安装依赖，推理代码请查看 [cli_demo](inference/cli_demo.py)。同时，**CogVideoX-2B** 模型开源协议已经修改为**Apache 2.0 协议**。
 - 🔥 ```2024/8/6```: 我们开源 **3D Causal VAE**，用于 **CogVideoX-2B**，可以几乎无损地重构视频。
 - 🔥 ```2024/8/6```: 我们开源 CogVideoX 系列视频生成模型的第一个模型, **CogVideoX-2B**。
 - 🌱 **Source**: ```2022/5/19```: 我们开源了 CogVideo 视频生成模型（现在你可以在 `CogVideo` 分支中看到），这是首个开源的基于
@@ -52,18 +51,23 @@ CogVideoX微调方式分为SFT和lora微调，在我们公开的数据处理的�
 跳转到指定部分：
 
 - [快速开始](#快速开始)
-    - [SAT](#sat)
-    - [Diffusers](#Diffusers)
-- [CogVideoX-2B 视频作品](#cogvideox-2b-视频作品)
-- [CogVideoX模型介绍](#模型介绍)
+  - [提示词优化](#提示词优化)
+  - [SAT](#sat)
+  - [Diffusers](#diffusers)
+- [视频作品](#视频作品)
+  - [CogVideoX-5B](#cogvideox-5b)
+  - [CogVideoX-2B](#cogvideox-2b)
+- [模型介绍](#模型介绍)
+- [友情链接](#友情链接)
 - [完整项目代码结构](#完整项目代码结构)
-    - [Inference](#inference)
-    - [SAT](#sat)
-    - [Tools](#tools)
-- [开源项目规划](#开源项目规划)
-- [模型协议](#模型协议)
-- [CogVideo(ICLR'23)模型介绍](#cogvideoiclr23)
+  - [Colab 快速使用](#colab-快速使用)
+  - [inference](#inference)
+  - [finetune](#finetune)
+  - [sat](#sat-1)
+  - [tools](#tools)
+- [CogVideo(ICLR'23)](#cogvideoiclr23)
 - [引用](#引用)
+- [模型协议](#模型协议)
 
 ## 快速开始
 
@@ -156,75 +160,87 @@ CogVideoX是 [清影](https://chatglm.cn/video?fr=osm_cogvideox) 同源的开源
 <table  style="border-collapse: collapse; width: 100%;">
   <tr>
     <th style="text-align: center;">模型名</th>
+    <th style="text-align: center;">CogVideoX1.5-5B (最新)</th>
+    <th style="text-align: center;">CogVideoX1.5-5B-I2V (最新)</th>
     <th style="text-align: center;">CogVideoX-2B</th>
     <th style="text-align: center;">CogVideoX-5B</th>
     <th style="text-align: center;">CogVideoX-5B-I2V </th>
   </tr>
   <tr>
+    <td style="text-align: center;">发布时间</td>
+    <th style="text-align: center;">2024年11月8日</th>
+    <th style="text-align: center;">2024年11月8日</th>
+    <th style="text-align: center;">2024年8月6日</th>
+    <th style="text-align: center;">2024年8月27日</th>
+    <th style="text-align: center;">2024年9月19日</th>
+  </tr>
+  <tr>
+    <td style="text-align: center;">视频分辨率</td>
+    <td colspan="1" style="text-align: center;">1360 * 768</td>
+    <td colspan="1" style="text-align: center;"> Min(W, H) = 768 <br> 768 ≤ Max(W, H) ≤ 1360 <br> Max(W, H) % 16 = 0 </td>
+    <td colspan="3" style="text-align: center;">720 * 480</td>
+    </tr>
+  <tr>
     <td style="text-align: center;">推理精度</td>
+    <td colspan="2" style="text-align: center;"><b>BF16(推荐)</b>, FP16, FP32，FP8*，INT8，不支持INT4</td>
     <td style="text-align: center;"><b>FP16*(推荐)</b>, BF16, FP32，FP8*，INT8，不支持INT4</td>
     <td colspan="2" style="text-align: center;"><b>BF16(推荐)</b>, FP16, FP32，FP8*，INT8，不支持INT4</td>
   </tr>
   <tr>
     <td style="text-align: center;">单GPU显存消耗<br></td>
+    <td colspan="2" style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> BF16: 76GB <br><b>diffusers BF16 : 10GB起* </b><br><b>diffusers INT8(torchao): 7G起* </b></td>
     <td style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> FP16: 18GB <br><b>diffusers FP16: 4GB起* </b><br><b>diffusers INT8(torchao): 3.6G起*</b></td>
     <td colspan="2" style="text-align: center;"><a href="https://github.com/THUDM/SwissArmyTransformer">SAT</a> BF16: 26GB <br><b>diffusers BF16 : 5GB起* </b><br><b>diffusers INT8(torchao): 4.4G起* </b></td>
   </tr>
   <tr>
     <td style="text-align: center;">多GPU推理显存消耗</td>
+    <td colspan="2" style="text-align: center;"><b>BF16: 24GB* using diffusers</b><br></td>
     <td style="text-align: center;"><b>FP16: 10GB* using diffusers</b><br></td>
     <td colspan="2" style="text-align: center;"><b>BF16: 15GB* using diffusers</b><br></td>
   </tr>
   <tr>
     <td style="text-align: center;">推理速度<br>(Step = 50, FP/BF16)</td>
+    <td colspan="2" style="text-align: center;">单卡A100: ~1000秒(5秒视频)<br>单卡H100: ~550秒(5秒视频)</td>
     <td style="text-align: center;">单卡A100: ~90秒<br>单卡H100: ~45秒</td>
     <td colspan="2" style="text-align: center;">单卡A100: ~180秒<br>单卡H100: ~90秒</td>
   </tr>
   <tr>
-    <td style="text-align: center;">微调精度</td>
-    <td style="text-align: center;"><b>FP16</b></td>
-    <td colspan="2" style="text-align: center;"><b>BF16</b></td>
-  </tr>
-  <tr>
-    <td style="text-align: center;">微调显存消耗</td>
-    <td style="text-align: center;">47 GB (bs=1, LORA)<br> 61 GB (bs=2, LORA)<br> 62GB (bs=1, SFT)</td>
-    <td style="text-align: center;">63 GB (bs=1, LORA)<br> 80 GB (bs=2, LORA)<br> 75GB (bs=1, SFT)<br></td>
-    <td style="text-align: center;">78 GB (bs=1, LORA)<br> 75GB (bs=1, SFT, 16GPU)<br></td>
-  </tr>
-  <tr>
     <td style="text-align: center;">提示词语言</td>
-    <td colspan="3" style="text-align: center;">English*</td>
+    <td colspan="5" style="text-align: center;">English*</td>
   </tr>
   <tr>
     <td style="text-align: center;">提示词长度上限</td>
+    <td colspan="2" style="text-align: center;">224 Tokens</td>
     <td colspan="3" style="text-align: center;">226 Tokens</td>
   </tr>
   <tr>
     <td style="text-align: center;">视频长度</td>
+    <td colspan="2" style="text-align: center;">5 秒 或 10 秒</td>
     <td colspan="3" style="text-align: center;">6 秒</td>
   </tr>
   <tr>
     <td style="text-align: center;">帧率</td>
+    <td colspan="2" style="text-align: center;">16 帧 / 秒 </td>
     <td colspan="3" style="text-align: center;">8 帧 / 秒 </td>
   </tr>
   <tr>
-    <td style="text-align: center;">视频分辨率</td>
-    <td colspan="3" style="text-align: center;">720 * 480，不支持其他分辨率(含微调)</td>
-  </tr>
-    <tr>
     <td style="text-align: center;">位置编码</td>
-    <td style="text-align: center;">3d_sincos_pos_embed</td>
-   <td style="text-align: center;">3d_sincos_pos_embed</td>
+    <td colspan="2" style="text-align: center;">3d_rope_pos_embed</td>
+    <td style="text-align: center;">3d_sincos_pos_embed</td> 
+    <td style="text-align: center;">3d_rope_pos_embed</td>
     <td style="text-align: center;">3d_rope_pos_embed + learnable_pos_embed</td>
   </tr>
   <tr>
     <td style="text-align: center;">下载链接 (Diffusers)</td>
+    <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX1.5-5B">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX1.5-5B">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX1.5-5B">🟣 WiseModel</a></td>
+    <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX1.5-5B-I2V">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX1.5-5B-I2V">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX1.5-5B-I2V">🟣 WiseModel</a></td>
     <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX-2b">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX-2b">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX-2b">🟣 WiseModel</a></td>
     <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX-5b">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX-5b">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX-5b">🟣 WiseModel</a></td>
     <td style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX-5b-I2V">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX-5b-I2V">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX-5b-I2V">🟣 WiseModel</a></td>
   </tr>
   <tr>
     <td style="text-align: center;">下载链接 (SAT)</td>
+    <td colspan="2" style="text-align: center;"><a href="https://huggingface.co/THUDM/CogVideoX1.5-5b-SAT">🤗 HuggingFace</a><br><a href="https://modelscope.cn/models/ZhipuAI/CogVideoX1.5-5b-SAT">🤖 ModelScope</a><br><a href="https://wisemodel.cn/models/ZhipuAI/CogVideoX1.5-5b-SAT">🟣 WiseModel</a></td>
     <td colspan="3" style="text-align: center;"><a href="./sat/README_zh.md">SAT</a></td>
   </tr>
 </table>
@@ -247,24 +263,32 @@ pipe.vae.enable_tiling()
 + [PytorchAO](https://github.com/pytorch/ao) 和 [Optimum-quanto](https://github.com/huggingface/optimum-quanto/)
   可以用于量化文本编码器、Transformer 和 VAE 模块，以降低 CogVideoX 的内存需求。这使得在免费的 T4 Colab 或更小显存的 GPU
   上运行模型成为可能！同样值得注意的是，TorchAO 量化完全兼容 `torch.compile`，这可以显著提高推理速度。在 `NVIDIA H100`
-  及以上设备上必须使用 `FP8` 精度，这需要源码安装 `torch`、`torchao`、`diffusers` 和 `accelerate` Python
-  包。建议使用 `CUDA 12.4`。
+  及以上设备上必须使用 `FP8` 精度，这需要源码安装 `torch`、`torchao` Python 包。建议使用 `CUDA 12.4`。
 + 推理速度测试同样采用了上述显存优化方案，不采用显存优化的情况下，推理速度提升约10%。 只有`diffusers`版本模型支持量化。
 + 模型仅支持英语输入，其他语言可以通过大模型润色时翻译为英语。
-+ 模型微调所占用的显存是在 `8 * H100` 环境下进行测试，程序已经自动使用`Zero 2` 优化。表格中若有标注具体GPU数量则必须使用大于等于该数量的GPU进行微调。
 
 ## 友情链接
 
 我们非常欢迎来自社区的贡献，并积极的贡献开源社区。以下作品已经对CogVideoX进行了适配，欢迎大家使用:
-+ [CogVideoX-Fun](https://github.com/aigc-apps/CogVideoX-Fun): CogVideoX-Fun是一个基于CogVideoX结构修改后的的pipeline，支持自由的分辨率，多种启动方式。
+
++ [CogVideoX-Fun](https://github.com/aigc-apps/CogVideoX-Fun):
+  CogVideoX-Fun是一个基于CogVideoX结构修改后的的pipeline，支持自由的分辨率，多种启动方式。
 + [CogStudio](https://github.com/pinokiofactory/cogstudio): CogVideo 的 Gradio Web UI单独实现仓库，支持更多功能的 Web UI。
 + [Xorbits Inference](https://github.com/xorbitsai/inference): 性能强大且功能全面的分布式推理框架，轻松一键部署你自己的模型或内置的前沿开源模型。
 + [ComfyUI-CogVideoXWrapper](https://github.com/kijai/ComfyUI-CogVideoXWrapper) 使用ComfyUI框架，将CogVideoX加入到你的工作流中。
 + [VideoSys](https://github.com/NUS-HPC-AI-Lab/VideoSys): VideoSys 提供了易用且高性能的视频生成基础设施，支持完整的管道，并持续集成最新的模型和技术。
 + [AutoDL镜像](https://www.codewithgpu.com/i/THUDM/CogVideo/CogVideoX-5b-demo): 由社区成员提供的一键部署Huggingface
   Space镜像。
-+ [室内设计微调模型](https://huggingface.co/collections/bertjiazheng/koolcogvideox-66e4762f53287b7f39f8f3ba) 基于 CogVideoX的微调模型，它专为室内设计而设计
++ [室内设计微调模型](https://huggingface.co/collections/bertjiazheng/koolcogvideox-66e4762f53287b7f39f8f3ba) 基于
+  CogVideoX的微调模型，它专为室内设计而设计
 + [xDiT](https://github.com/xdit-project/xDiT): xDiT是一个用于在多GPU集群上对DiTs并行推理的引擎。xDiT支持实时图像和视频生成服务。
++ [CogVideoX-Interpolation](https://github.com/feizc/CogvideX-Interpolation): 基于 CogVideoX 结构修改的管道，旨在为关键帧插值生成提供更大的灵活性。
++ [DiffSynth-Studio](https://github.com/modelscope/DiffSynth-Studio): DiffSynth 工作室是一款扩散引擎。重构了架构，包括文本编码器、UNet、VAE
+  等，在保持与开源社区模型兼容性的同时，提升了计算性能。该框架已经适配 CogVideoX。
++ [CogVideoX-Controlnet](https://github.com/TheDenk/cogvideox-controlnet): 一个包含 CogvideoX 模型的简单 Controlnet 模块的代码。
++ [VideoTuna](https://github.com/VideoVerses/VideoTuna)：VideoTuna 是首个集成多种 AI 视频生成模型的仓库，支持文本转视频、图像转视频、文本转图像生成。
++ [ConsisID](https://github.com/PKU-YuanGroup/ConsisID): 一种身份保持的文本到视频生成模型，基于 CogVideoX-5B，通过频率分解在生成的视频中保持面部一致性。
++ [教程](https://www.youtube.com/watch?v=5UCkMzP2VLE&ab_channel=SECourses): 一个关于在Windows和云环境中安装和优化CogVideoX1.5-5B-I2V模型的分步指南。特别感谢[FurkanGozukara](https://github.com/FurkanGozukara)的努力和支持！
 
 
 ## 完整项目代码结构
@@ -323,8 +347,10 @@ pipe.vae.enable_tiling()
 + [llm_flux_cogvideox](tools/llm_flux_cogvideox/llm_flux_cogvideox.py): 使用开源本地大语言模型 + Flux +
   CogVideoX实现自动化生成视频。
 + [parallel_inference_xdit](tools/parallel_inference/parallel_inference_xdit.py):
-在多个 GPU 上并行化视频生成过程，
+  在多个 GPU 上并行化视频生成过程，
   由[xDiT](https://github.com/xdit-project/xDiT)提供支持。
++ [cogvideox-factory](https://github.com/a-r-r-o-w/cogvideox-factory): CogVideoX低成文微调框架，适配`diffusers`
+  版本模型。支持更多分辨率，单卡4090即可微调 CogVideoX-5B 。
 
 ## CogVideo(ICLR'23)
 
