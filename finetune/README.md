@@ -1,126 +1,146 @@
-# CogVideoX diffusers Fine-tuning Guide
+# CogVideoX Diffusers Fine-tuning Guide
 
 [中文阅读](./README_zh.md)
 
 [日本語で読む](./README_ja.md)
 
-This feature is not fully complete yet. If you want to check the fine-tuning for the SAT version, please
-see [here](../sat/README_zh.md). The dataset format is different from this version.
+If you're looking for the fine-tuning instructions for the SAT version, please check [here](../sat/README_zh.md). The
+dataset format for this version differs from the one used here.
 
 ## Hardware Requirements
 
-+ CogVideoX-2B / 5B LoRA: 1 * A100 (5B need to use `--use_8bit_adam`)
-+ CogVideoX-2B SFT:  8 * A100 (Working)
-+ CogVideoX-5B-I2V is not supported yet.
+| Model                      | Training Type  | Distribution Strategy                | Mixed Precision | Training Resolution (FxHxW) | Hardware Requirements   |
+|----------------------------|----------------|--------------------------------------|-----------------|-----------------------------|-------------------------|
+| cogvideox-t2v-2b           | lora (rank128) | DDP                                  | fp16            | 49x480x720                  | 16GB VRAM (NVIDIA 4080) |
+| cogvideox-{t2v, i2v}-5b    | lora (rank128) | DDP                                  | bf16            | 49x480x720                  | 24GB VRAM (NVIDIA 4090) |
+| cogvideox1.5-{t2v, i2v}-5b | lora (rank128) | DDP                                  | bf16            | 81x768x1360                 | 35GB VRAM (NVIDIA A100) |
+| cogvideox-t2v-2b           | sft            | DDP                                  | fp16            | 49x480x720                  | 36GB VRAM (NVIDIA A100) |
+| cogvideox-t2v-2b           | sft            | 1-GPU zero-2 + opt offload           | fp16            | 49x480x720                  | 17GB VRAM (NVIDIA 4090) |
+| cogvideox-t2v-2b           | sft            | 8-GPU zero-2                         | fp16            | 49x480x720                  | 17GB VRAM (NVIDIA 4090) |
+| cogvideox-t2v-2b           | sft            | 8-GPU zero-3                         | fp16            | 49x480x720                  | 19GB VRAM (NVIDIA 4090) |
+| cogvideox-t2v-2b           | sft            | 8-GPU zero-3 + opt and param offload | bf16            | 49x480x720                  | 14GB VRAM (NVIDIA 4080) |
+| cogvideox-{t2v, i2v}-5b    | sft            | 1-GPU zero-2 + opt offload           | bf16            | 49x480x720                  | 42GB VRAM (NVIDIA A100) |
+| cogvideox-{t2v, i2v}-5b    | sft            | 8-GPU zero-2                         | bf16            | 49x480x720                  | 42GB VRAM (NVIDIA 4090) |
+| cogvideox-{t2v, i2v}-5b    | sft            | 8-GPU zero-3                         | bf16            | 49x480x720                  | 43GB VRAM (NVIDIA 4090) |
+| cogvideox-{t2v, i2v}-5b    | sft            | 8-GPU zero-3 + opt and param offload | bf16            | 49x480x720                  | 28GB VRAM (NVIDIA 5090) |
+| cogvideox1.5-{t2v, i2v}-5b | sft            | 1-GPU zero-2 + opt offload           | bf16            | 81x768x1360                 | 56GB VRAM (NVIDIA A100) |
+| cogvideox1.5-{t2v, i2v}-5b | sft            | 8-GPU zero-2                         | bf16            | 81x768x1360                 | 55GB VRAM (NVIDIA A100) |
+| cogvideox1.5-{t2v, i2v}-5b | sft            | 8-GPU zero-3                         | bf16            | 81x768x1360                 | 55GB VRAM (NVIDIA A100) |
+| cogvideox1.5-{t2v, i2v}-5b | sft            | 8-GPU zero-3 + opt and param offload | bf16            | 81x768x1360                 | 40GB VRAM (NVIDIA A100) |
 
 ## Install Dependencies
 
-Since the related code has not been merged into the diffusers release, you need to base your fine-tuning on the
-diffusers branch. Please follow the steps below to install dependencies:
+Since the relevant code has not yet been merged into the official `diffusers` release, you need to fine-tune based on
+the diffusers branch. Follow the steps below to install the dependencies:
 
 ```shell
 git clone https://github.com/huggingface/diffusers.git
-cd diffusers # Now in Main branch
+cd diffusers # Now on the Main branch
 pip install -e .
 ```
 
 ## Prepare the Dataset
 
-First, you need to prepare the dataset. The dataset format should be as follows, with `videos.txt` containing the list
-of videos in the `videos` directory:
+First, you need to prepare your dataset. Depending on your task type (T2V or I2V), the dataset format will vary
+slightly:
 
 ```
 .
 ├── prompts.txt
 ├── videos
-└── videos.txt
+├── videos.txt
+├── images     # (Optional) For I2V, if not provided, first frame will be extracted from video as reference
+└── images.txt # (Optional) For I2V, if not provided, first frame will be extracted from video as reference
 ```
 
-You can download
-the [Disney Steamboat Willie](https://huggingface.co/datasets/Wild-Heart/Disney-VideoGeneration-Dataset) dataset from
-here.
+Where:
 
-This video fine-tuning dataset is used as a test for fine-tuning.
+- `prompts.txt`: Contains the prompts
+- `videos/`: Contains the .mp4 video files
+- `videos.txt`: Contains the list of video files in the `videos/` directory
+- `images/`: (Optional) Contains the .png reference image files
+- `images.txt`: (Optional) Contains the list of reference image files
 
-## Configuration Files and Execution
+You can download a sample dataset (
+T2V) [Disney Steamboat Willie](https://huggingface.co/datasets/Wild-Heart/Disney-VideoGeneration-Dataset).
 
-The `accelerate` configuration files are as follows:
+If you need to use a validation dataset during training, make sure to provide a validation dataset with the same format
+as the training dataset.
 
-+ `accelerate_config_machine_multi.yaml`: Suitable for multi-GPU use
-+ `accelerate_config_machine_single.yaml`: Suitable for single-GPU use
+## Running Scripts to Start Fine-tuning
 
-The configuration for the `finetune` script is as follows:
+Before starting training, please note the following resolution requirements:
 
-```
-accelerate launch --config_file accelerate_config_machine_single.yaml --multi_gpu \  # Use accelerate to launch multi-GPU training with the config file accelerate_config_machine_single.yaml
-  train_cogvideox_lora.py \  # Training script train_cogvideox_lora.py for LoRA fine-tuning on CogVideoX model
-  --gradient_checkpointing \  # Enable gradient checkpointing to reduce memory usage
-  --pretrained_model_name_or_path $MODEL_PATH \  # Path to the pretrained model, specified by $MODEL_PATH
-  --cache_dir $CACHE_PATH \  # Cache directory for model files, specified by $CACHE_PATH
-  --enable_tiling \  # Enable tiling technique to process videos in chunks, saving memory
-  --enable_slicing \  # Enable slicing to further optimize memory by slicing inputs
-  --instance_data_root $DATASET_PATH \  # Dataset path specified by $DATASET_PATH
-  --caption_column prompts.txt \  # Specify the file prompts.txt for video descriptions used in training
-  --video_column videos.txt \  # Specify the file videos.txt for video paths used in training
-  --validation_prompt "" \  # Prompt used for generating validation videos during training
-  --validation_prompt_separator ::: \  # Set ::: as the separator for validation prompts
-  --num_validation_videos 1 \  # Generate 1 validation video per validation round
-  --validation_epochs 100 \  # Perform validation every 100 training epochs
-  --seed 42 \  # Set random seed to 42 for reproducibility
-  --rank 128 \  # Set the rank for LoRA parameters to 128
-  --lora_alpha 64 \  # Set the alpha parameter for LoRA to 64, adjusting LoRA learning rate
-  --mixed_precision bf16 \  # Use bf16 mixed precision for training to save memory
-  --output_dir $OUTPUT_PATH \  # Specify the output directory for the model, defined by $OUTPUT_PATH
-  --height 480 \  # Set video height to 480 pixels
-  --width 720 \  # Set video width to 720 pixels
-  --fps 8 \  # Set video frame rate to 8 frames per second
-  --max_num_frames 49 \  # Set the maximum number of frames per video to 49
-  --skip_frames_start 0 \  # Skip 0 frames at the start of the video
-  --skip_frames_end 0 \  # Skip 0 frames at the end of the video
-  --train_batch_size 4 \  # Set training batch size to 4
-  --num_train_epochs 30 \  # Total number of training epochs set to 30
-  --checkpointing_steps 1000 \  # Save model checkpoint every 1000 steps
-  --gradient_accumulation_steps 1 \  # Accumulate gradients for 1 step, updating after each batch
-  --learning_rate 1e-3 \  # Set learning rate to 0.001
-  --lr_scheduler cosine_with_restarts \  # Use cosine learning rate scheduler with restarts
-  --lr_warmup_steps 200 \  # Warm up the learning rate for the first 200 steps
-  --lr_num_cycles 1 \  # Set the number of learning rate cycles to 1
-  --optimizer AdamW \  # Use the AdamW optimizer
-  --adam_beta1 0.9 \  # Set Adam optimizer beta1 parameter to 0.9
-  --adam_beta2 0.95 \  # Set Adam optimizer beta2 parameter to 0.95
-  --max_grad_norm 1.0 \  # Set maximum gradient clipping value to 1.0
-  --allow_tf32 \  # Enable TF32 to speed up training
-  --report_to wandb  # Use Weights and Biases (wandb) for logging and monitoring the training
+1. The number of frames must be a multiple of 8 **plus 1** (i.e., 8N+1), such as 49, 81 ...
+2. Recommended video resolutions for each model:
+    - CogVideoX: 480x720 (height x width)
+    - CogVideoX1.5: 768x1360 (height x width)
+3. For samples (videos or images) that don't match the training resolution, the code will directly resize them. This may
+   cause aspect ratio distortion and affect training results. It's recommended to preprocess your samples (e.g., using
+   crop + resize to maintain aspect ratio) before training.
+
+> **Important Note**: To improve training efficiency, we automatically encode videos and cache the results on disk
+> before training. If you modify the data after training, please delete the latent directory under the video directory to
+> ensure the latest data is used.
+
+### LoRA
+
+```bash
+# Modify configuration parameters in train_ddp_t2v.sh
+# Main parameters to modify:
+# --output_dir: Output directory
+# --data_root: Dataset root directory
+# --caption_column: Path to prompt file
+# --image_column: Optional for I2V, path to reference image file list (remove this parameter to use the first frame of video as image condition)
+# --video_column: Path to video file list
+# --train_resolution: Training resolution (frames x height x width)
+# For other important parameters, please refer to the launch script
+
+bash train_ddp_t2v.sh  # Text-to-Video (T2V) fine-tuning
+bash train_ddp_i2v.sh  # Image-to-Video (I2V) fine-tuning
 ```
 
-## Running the Script to Start Fine-tuning
+### SFT
 
-Single Node (One GPU or Multi GPU) fine-tuning:
+We provide several zero configuration templates in the `configs/` directory. Please choose the appropriate training
+configuration based on your needs (configure the `deepspeed_config_file` option in `accelerate_config.yaml`).
 
-```shell
-bash finetune_single_rank.sh
+```bash
+# Parameters to configure are the same as LoRA training
+
+bash train_zero_t2v.sh  # Text-to-Video (T2V) fine-tuning
+bash train_zero_i2v.sh  # Image-to-Video (I2V) fine-tuning
 ```
 
-Multi-Node fine-tuning:
+In addition to setting the bash script parameters, you need to set the relevant training options in the zero
+configuration file and ensure the zero training configuration matches the parameters in the bash script, such as
+batch_size, gradient_accumulation_steps, mixed_precision. For details, please refer to
+the [DeepSpeed official documentation](https://www.deepspeed.ai/docs/config-json/)
 
-```shell
-bash finetune_multi_rank.sh # Needs to be run on each node
-```
+When using SFT training, please note:
 
-## Loading the Fine-tuned Model
+1. For SFT training, model offload is not used during validation, so the peak VRAM usage may exceed 24GB. For GPUs with
+   less than 24GB VRAM, it's recommended to disable validation.
 
-+ Please refer to [cli_demo.py](../inference/cli_demo.py) for how to load the fine-tuned model.
+2. Validation is slow when zero-3 is enabled, so it's recommended to disable validation when using zero-3.
+
+## Load the Fine-tuned Model
+
++ Please refer to [cli_demo.py](../inference/cli_demo.py) for instructions on how to load the fine-tuned model.
+
++ For SFT trained models, please first use the `zero_to_fp32.py` script in the `checkpoint-*/` directory to merge the
+  model weights
 
 ## Best Practices
 
-+ Includes 70 training videos with a resolution of `200 x 480 x 720` (frames x height x width). By skipping frames in
-  the data preprocessing, we created two smaller datasets with 49 and 16 frames to speed up experimentation, as the
-  maximum frame limit recommended by the CogVideoX team is 49 frames. We split the 70 videos into three groups of 10,
-  25, and 50 videos, with similar conceptual nature.
-+ Using 25 or more videos works best when training new concepts and styles.
-+ It works better to train using identifier tokens specified with `--id_token`. This is similar to Dreambooth training,
-  but regular fine-tuning without such tokens also works.
-+ The original repository used `lora_alpha` set to 1. We found this value ineffective across multiple runs, likely due
-  to differences in the backend and training setup. Our recommendation is to set `lora_alpha` equal to rank or rank //
-    2.
-+ We recommend using a rank of 64 or higher.
++ We included 70 training videos with a resolution of `200 x 480 x 720` (frames x height x width). Through frame
+  skipping in the data preprocessing, we created two smaller datasets with 49 and 16 frames to speed up experiments. The
+  maximum frame count recommended by the CogVideoX team is 49 frames. These 70 videos were divided into three groups:
+  10, 25, and 50 videos, with similar conceptual nature.
++ Videos with 25 or more frames work best for training new concepts and styles.
++ It's recommended to use an identifier token, which can be specified using `--id_token`, for better training results.
+  This is similar to Dreambooth training, though regular fine-tuning without using this token will still work.
++ The original repository uses `lora_alpha` set to 1. We found that this value performed poorly in several runs,
+  possibly due to differences in the model backend and training settings. Our recommendation is to set `lora_alpha` to
+  be equal to the rank or `rank // 2`.
++ It's advised to use a rank of 64 or higher.

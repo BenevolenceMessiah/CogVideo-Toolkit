@@ -5,8 +5,7 @@
 [日本語で読む](./README_ja.md)
 
 本文件夹包含了使用 [SAT](https://github.com/THUDM/SwissArmyTransformer) 权重的推理代码，以及 SAT 权重的微调代码。
-
-该代码是团队训练模型时使用的框架。注释较少，需要认真研究。
+如果你关注 `CogVideoX1.0`版本的模型，请查看[这里](https://github.com/THUDM/CogVideo/releases/tag/v1.0)的SAT文件夹，该分支仅支持`CogVideoX1.5`系列模型。
 
 ## 推理模型
 
@@ -333,7 +332,7 @@ Encoder 使用。
   eval_iters: 1 # 验证迭代次数
   eval_interval: 100    # 验证间隔
   eval_batch_size: 1  # 验证集 batch size
-  save: ckpts # 模型保存路径 
+  save: ckpts # 模型保存路径
   save_interval: 100 # 模型保存间隔
   log_interval: 20 # 日志输出间隔
   train_data: [ "your train data path" ]
@@ -404,7 +403,7 @@ run_cmd="$environs python sample_video.py --base configs/cogvideox_<模型参数
 然后，执行代码:
 
 ```
-bash inference.sh 
+bash inference.sh
 ```
 
 ### 转换到 Huggingface Diffusers 库支持的权重
